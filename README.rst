@@ -21,7 +21,7 @@ Faker is heavily inspired by `PHP Faker`_, `Perl Faker`_, and by `Ruby Faker`_.
 
 For more details, see the `extended docs`_.
 
-Basic Usage
+Basic Usage test
 -----------
 
 Install with pip:

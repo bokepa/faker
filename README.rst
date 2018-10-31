@@ -21,7 +21,7 @@ Faker is heavily inspired by `PHP Faker`_, `Perl Faker`_, and by `Ruby Faker`_.
 
 For more details, see the `extended docs`_.
 
-Basic Usage test
+Basic Usage
 -----------
 
 Install with pip:
@@ -138,6 +138,7 @@ Included localized providers:
 -  `bs\_BA <https://faker.readthedocs.io/en/master/locales/bs_BA.html>`__ - Bosnian
 -  `bg\_BG <https://faker.readthedocs.io/en/master/locales/bg_BG.html>`__ - Bulgarian
 -  `cs\_CZ <https://faker.readthedocs.io/en/master/locales/cs_CZ.html>`__ - Czech
+-  `ca\_ES <https://faker.readthedocs.io/en/master/locales/ca_ES.html>`__ - Catalan (Spain)
 -  `de\_DE <https://faker.readthedocs.io/en/master/locales/de_DE.html>`__ - German
 -  `dk\_DK <https://faker.readthedocs.io/en/master/locales/dk_DK.html>`__ - Danish
 -  `el\_GR <https://faker.readthedocs.io/en/master/locales/el_GR.html>`__ - Greek

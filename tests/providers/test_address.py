@@ -19,6 +19,8 @@ from faker.providers.address.fi_FI import Provider as FiProvider
 from faker.providers.address.pt_PT import Provider as PtPtProvider
 from faker.providers.address.ja_JP import Provider as JaProvider
 from faker.providers.address.ne_NP import Provider as NeProvider
+from faker.providers.address.ca_ES import Provider as CaEsProvider
+
 from six import string_types
 
 
@@ -683,3 +685,14 @@ class TestPtPT(unittest.TestCase):
         freguesia = self.factory.freguesia()
         assert isinstance(freguesia, string_types)
         assert freguesia in PtPtProvider.freguesias
+
+        
+class TestCaEs(unittest.TestCase):
+
+    def setUp(self):
+        self.factory = Faker('ca_ES')
+
+    def test_address(self):
+        address = self.factory.address()
+        assert isinstance(address, string_types)
+        

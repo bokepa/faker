@@ -1,7 +1,7 @@
 # coding=utf-8
 
 from __future__ import unicode_literals
-from ..es import Provider as AddressProvider
+from ..ca import Provider as AddressProvider
 
 
 class Provider(AddressProvider):

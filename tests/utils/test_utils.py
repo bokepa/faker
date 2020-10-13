@@ -1,14 +1,15 @@
-from faker.utils.loading import find_available_locales
-from faker.utils.distribution import choices_distribution, choices_distribution_unique
-from faker.utils.datasets import add_dicts
-from faker.config import PROVIDERS
-from faker.generator import random
-from faker.utils.loading import find_available_providers
-from faker.config import META_PROVIDERS_MODULES
-from importlib import import_module
-import unittest
 import json
 import os
+import unittest
+
+from importlib import import_module
+
+from faker.config import META_PROVIDERS_MODULES, PROVIDERS
+from faker.generator import random
+from faker.utils.checksums import calculate_luhn, luhn_checksum
+from faker.utils.datasets import add_dicts
+from faker.utils.distribution import choices_distribution, choices_distribution_unique
+from faker.utils.loading import find_available_locales, find_available_providers
 
 TEST_DIR = os.path.dirname(__file__)
 
@@ -78,6 +79,7 @@ class UtilsTestCase(unittest.TestCase):
             'faker.providers.currency',
             'faker.providers.date_time',
             'faker.providers.file',
+            'faker.providers.geo',
             'faker.providers.internet',
             'faker.providers.isbn',
             'faker.providers.job',
@@ -91,3 +93,25 @@ class UtilsTestCase(unittest.TestCase):
             'faker.providers.user_agent',
         ]))
         assert providers == expected_providers
+
+    def test_luhn_checksum(self):
+        """
+        Tests if a valid checksum is generated
+        Example from wiki: https://en.wikipedia.org/wiki/Luhn_algorithm
+        """
+        check_digit = calculate_luhn("7992739871")
+        assert check_digit == 3
+
+    def test_valid_luhn(self):
+        """
+        Tests if the number has a valid check digit
+        Example from wiki https://en.wikipedia.org/wiki/Luhn_algorithm
+        """
+        assert luhn_checksum("79927398713") == 0
+
+    def test_invalid_luhn(self):
+        """
+        Tests a number with an invalid check digit
+        Example from wiki https://en.wikipedia.org/wiki/Luhn_algorithm
+        """
+        assert luhn_checksum("79927398714") != 0

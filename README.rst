@@ -19,7 +19,18 @@ Faker is heavily inspired by `PHP Faker`_, `Perl Faker`_, and by `Ruby Faker`_.
 
 ----
 
-For more details, see the `extended docs`_.
+Compatibility
+-------------
+
+Starting from version ``4.0.0``, ``Faker`` dropped support for Python 2 and only supports Python
+3.5 and above. If you still need Python 2 compatibility, please install version ``3.0.1`` in the
+meantime, and please consider updating your codebase to support Python 3 so you can enjoy the
+latest features ``Faker`` has to offer. Please see the `extended docs`_ for more details, especially
+if you are upgrading from version ``2.0.4`` and below as there might be breaking changes.
+
+This package was also previously called ``fake-factory`` which was already deprecated by the end
+of 2016, and much has changed since then, so please ensure that your project and its dependencies
+do not depend on the old package.
 
 Basic Usage test
 -----------
@@ -29,8 +40,6 @@ Install with pip:
 .. code:: bash
 
     pip install Faker
-
-*Note: this package was previously called* ``fake-factory``.
 
 Use ``faker.Faker()`` to create and initialize a faker
 generator, which can generate data by accessing properties named after
@@ -79,6 +88,12 @@ to ``faker.Generator.format(method_name)``.
     # 'Wellington Koelpin II'
     # 'Ms. Karley Kiehn V'
 
+Pytest fixtures
+---------------
+
+``Faker`` also has its own ``pytest`` plugin which provides a ``faker`` fixture you can use in your
+tests. Please check out the `pytest fixture docs` to learn more.
+
 Providers
 ---------
 
@@ -88,14 +103,14 @@ packaged in "providers".
 
 .. code:: python
 
-    from faker import Factory
+    from faker import Faker
     from faker.providers import internet
-    
-    fake = Factory.create()
+
+    fake = Faker()
     fake.add_provider(internet)
-    
+
     print(fake.ipv4_private())
-    
+
 
 Check the `extended docs`_ for a list of `bundled providers`_ and a list of
 `community providers`_.
@@ -103,7 +118,7 @@ Check the `extended docs`_ for a list of `bundled providers`_ and a list of
 Localization
 ------------
 
-``faker.Factory`` can take a locale as an argument, to return localized
+``faker.Faker`` can take a locale as an argument, to return localized
 data. If no localized provider is found, the factory falls back to the
 default en\_US locale.
 
@@ -125,56 +140,30 @@ default en\_US locale.
     # 'Nazzareno Barbieri'
     # 'Max Coppola'
 
+``faker.Faker`` also supports multiple locales. New in v3.0.0.
+
+.. code:: python
+
+    from faker import Faker
+    fake = Faker(['it_IT', 'en_US', 'ja_JP'])
+    for _ in range(10):
+        print(fake.name())
+
+    # 鈴木 陽一
+    # Leslie Moreno
+    # Emma Williams
+    # 渡辺 裕美子
+    # Marcantonio Galuppi
+    # Martha Davis
+    # Kristen Turner
+    # 中津川 春香
+    # Ashley Castillo
+    # 山田 桃子
+
 You can check available Faker locales in the source code, under the
 providers package. The localization of Faker is an ongoing process, for
 which we need your help. Please don't hesitate to create a localized
 provider for your own locale and submit a Pull Request (PR).
-
-Included localized providers:
-
--  `ar\_EG <https://faker.readthedocs.io/en/master/locales/ar_EG.html>`__ - Arabic (Egypt)
--  `ar\_PS <https://faker.readthedocs.io/en/master/locales/ar_PS.html>`__ - Arabic (Palestine)
--  `ar\_SA <https://faker.readthedocs.io/en/master/locales/ar_SA.html>`__ - Arabic (Saudi Arabia)
--  `bs\_BA <https://faker.readthedocs.io/en/master/locales/bs_BA.html>`__ - Bosnian
--  `bg\_BG <https://faker.readthedocs.io/en/master/locales/bg_BG.html>`__ - Bulgarian
--  `cs\_CZ <https://faker.readthedocs.io/en/master/locales/cs_CZ.html>`__ - Czech
--  `de\_DE <https://faker.readthedocs.io/en/master/locales/de_DE.html>`__ - German
--  `dk\_DK <https://faker.readthedocs.io/en/master/locales/dk_DK.html>`__ - Danish
--  `el\_GR <https://faker.readthedocs.io/en/master/locales/el_GR.html>`__ - Greek
--  `en\_AU <https://faker.readthedocs.io/en/master/locales/en_AU.html>`__ - English (Australia)
--  `en\_CA <https://faker.readthedocs.io/en/master/locales/en_CA.html>`__ - English (Canada)
--  `en\_GB <https://faker.readthedocs.io/en/master/locales/en_GB.html>`__ - English (Great Britain)
--  `en\_NZ <https://faker.readthedocs.io/en/master/locales/en_NZ.html>`__ - English (New Zealand)
--  `en\_US <https://faker.readthedocs.io/en/master/locales/en_US.html>`__ - English (United States)
--  `es\_ES <https://faker.readthedocs.io/en/master/locales/es_ES.html>`__ - Spanish (Spain)
--  `es\_MX <https://faker.readthedocs.io/en/master/locales/es_MX.html>`__ - Spanish (Mexico)
--  `et\_EE <https://faker.readthedocs.io/en/master/locales/et_EE.html>`__ - Estonian
--  `fa\_IR <https://faker.readthedocs.io/en/master/locales/fa_IR.html>`__ - Persian (Iran)
--  `fi\_FI <https://faker.readthedocs.io/en/master/locales/fi_FI.html>`__ - Finnish
--  `fr\_FR <https://faker.readthedocs.io/en/master/locales/fr_FR.html>`__ - French
--  `hi\_IN <https://faker.readthedocs.io/en/master/locales/hi_IN.html>`__ - Hindi
--  `hr\_HR <https://faker.readthedocs.io/en/master/locales/hr_HR.html>`__ - Croatian
--  `hu\_HU <https://faker.readthedocs.io/en/master/locales/hu_HU.html>`__ - Hungarian
--  `it\_IT <https://faker.readthedocs.io/en/master/locales/it_IT.html>`__ - Italian
--  `ja\_JP <https://faker.readthedocs.io/en/master/locales/ja_JP.html>`__ - Japanese
--  `ko\_KR <https://faker.readthedocs.io/en/master/locales/ko_KR.html>`__ - Korean
--  `lt\_LT <https://faker.readthedocs.io/en/master/locales/lt_LT.html>`__ - Lithuanian
--  `lv\_LV <https://faker.readthedocs.io/en/master/locales/lv_LV.html>`__ - Latvian
--  `ne\_NP <https://faker.readthedocs.io/en/master/locales/ne_NP.html>`__ - Nepali
--  `nl\_NL <https://faker.readthedocs.io/en/master/locales/nl_NL.html>`__ - Dutch (Netherlands)
--  `no\_NO <https://faker.readthedocs.io/en/master/locales/no_NO.html>`__ - Norwegian
--  `pl\_PL <https://faker.readthedocs.io/en/master/locales/pl_PL.html>`__ - Polish
--  `pt\_BR <https://faker.readthedocs.io/en/master/locales/pt_BR.html>`__ - Portuguese (Brazil)
--  `pt\_PT <https://faker.readthedocs.io/en/master/locales/pt_PT.html>`__ - Portuguese (Portugal)
--  `ro\_RO <https://faker.readthedocs.io/en/master/locales/ro_RO.html>`__ - Romanian
--  `ru\_RU <https://faker.readthedocs.io/en/master/locales/ru_RU.html>`__ - Russian
--  `sl\_SI <https://faker.readthedocs.io/en/master/locales/sl_SI.html>`__ - Slovene
--  `sv\_SE <https://faker.readthedocs.io/en/master/locales/sv_SE.html>`__ - Swedish
--  `tr\_TR <https://faker.readthedocs.io/en/master/locales/tr_TR.html>`__ - Turkish
--  `uk\_UA <https://faker.readthedocs.io/en/master/locales/uk_UA.html>`__ - Ukrainian
--  `zh\_CN <https://faker.readthedocs.io/en/master/locales/zh_CN.html>`__ - Chinese (China)
--  `zh\_TW <https://faker.readthedocs.io/en/master/locales/zh_TW.html>`__ - Chinese (Taiwan)
--  `ka\_GE <https://faker.readthedocs.io/en/master/locales/ka_GE.html>`__ - Georgian (Georgia)
 
 Command line usage
 ------------------
@@ -208,13 +197,16 @@ Where:
 -  ``-s SEP``: will generate the specified separator after each
    generated output
 
--  ``-i {my.custom_provider other.custom_provider}`` list of additional custom providers to use.
-   Note that is the import path of the package containing your Provider class, not the custom Provider class itself.
+-  ``-i {my.custom_provider other.custom_provider}`` list of additional custom
+   providers to use. Note that is the import path of the package containing
+   your Provider class, not the custom Provider class itself.
 
 -  ``fake``: is the name of the fake to generate an output for, such as
    ``name``, ``address``, or ``text``
 
--  ``[fake argument ...]``: optional arguments to pass to the fake (e.g. the profile fake takes an optional list of comma separated field names as the first argument)
+-  ``[fake argument ...]``: optional arguments to pass to the fake (e.g. the
+   profile fake takes an optional list of comma separated field names as the
+   first argument)
 
 Examples:
 
@@ -247,13 +239,13 @@ How to create a Provider
     # first, import a similar Provider or use the default one
     from faker.providers import BaseProvider
 
-    # create new provider class. Note that the class name _must_ be ``Provider``.
-    class Provider(BaseProvider):
+    # create new provider class
+    class MyProvider(BaseProvider):
         def foo(self):
             return 'bar'
 
     # then add new provider to faker instance
-    fake.add_provider(Provider)
+    fake.add_provider(MyProvider)
 
     # now you can use:
     fake.foo()
@@ -304,8 +296,8 @@ How to use with Factory Boy
 Accessing the `random` instance
 -------------------------------
 
-The ``.random`` property on the generator returns the instance of ``random.Random``
-used to generate the values:
+The ``.random`` property on the generator returns the instance of
+``random.Random`` used to generate the values:
 
 .. code:: python
 
@@ -318,19 +310,51 @@ By default all generators share the same instance of ``random.Random``, which
 can be accessed with ``from faker.generator import random``. Using this may
 be useful for plugins that want to affect all faker instances.
 
+Unique values
+-------------
+
+Through use of the ``.unique`` property on the generator, you can guarantee
+that any generated values are unique for this specific instance.
+
+.. code:: python
+
+   from faker import Faker
+   fake = Faker()
+   names = [fake.unique.first_name() for i in range(500)]
+   assert len(set(names)) == len(names)
+
+Calling ``fake.unique.clear()`` clears the already seen values.
+Note, to avoid infinite loops, after a number of attempts to find a unique
+value, Faker will throw a ``UniquenessException``. Beware of the `birthday
+paradox <https://en.wikipedia.org/wiki/Birthday_problem>`_, collisions
+are more likely than you'd think.
+
+
+.. code:: python
+
+   from faker import Faker
+
+   fake = Faker()
+   for i in range(3):
+        # Raises a UniquenessException
+        fake.unique.boolean()
+
+In addition, only hashable arguments and return values can be used
+with ``.unique``.
+
 Seeding the Generator
 ---------------------
 
 When using Faker for unit testing, you will often want to generate the same
-data set. For convenience, the generator also provide a ``seed()`` method, which
-seeds the shared random number generator. Calling the same methods with the
-same version of faker and seed produces the same results.
+data set. For convenience, the generator also provide a ``seed()`` method,
+which seeds the shared random number generator. Calling the same methods with
+the same version of faker and seed produces the same results.
 
 .. code:: python
 
     from faker import Faker
     fake = Faker()
-    fake.seed(4321)
+    Faker.seed(4321)
 
     print(fake.name())
     # 'Margaret Boehm'
@@ -352,26 +376,17 @@ Please note that as we keep updating datasets, results are not guaranteed to be
 consistent across patch versions. If you hardcode results in your test, make sure
 you pinned the version of ``Faker`` down to the patch number.
 
+If you are using ``pytest``, you can seed the ``faker`` fixture by defining a ``faker_seed``
+fixture. Please check out the `pytest fixture docs` to learn more.
+
 Tests
 -----
-
-Installing dependencies:
-
-.. code:: bash
-
-    $ pip install -e .
 
 Run tests:
 
 .. code:: bash
 
-    $ python setup.py test
-
-or
-
-.. code:: bash
-
-    $ python -m unittest -v tests
+    $ tox
 
 Write documentation for providers:
 
@@ -388,7 +403,8 @@ Please see `CONTRIBUTING`_.
 License
 -------
 
-Faker is released under the MIT License. See the bundled `LICENSE`_ file for details.
+Faker is released under the MIT License. See the bundled `LICENSE`_ file
+for details.
 
 Credits
 -------
@@ -409,6 +425,7 @@ Credits
 .. _extended docs: https://faker.readthedocs.io/en/stable/
 .. _bundled providers: https://faker.readthedocs.io/en/stable/providers.html
 .. _community providers: https://faker.readthedocs.io/en/stable/communityproviders.html
+.. _pytest fixture docs: https://faker.readthedocs.io/en/master/pytest-fixtures.html
 .. _LICENSE: https://github.com/joke2k/faker/blob/master/LICENSE.txt
 .. _CONTRIBUTING: https://github.com/joke2k/faker/blob/master/CONTRIBUTING.rst
 .. _Factory Boy: https://github.com/FactoryBoy/factory_boy
